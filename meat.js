@@ -9,7 +9,8 @@ let roomsPublic = [];
 let rooms = {};
 let usersAll = [];
 
-const DEFAULT_ROOMS = ['area_51', 'news', 'poland', 'why'];
+const DEFAULT_ROOMS = ['default', 'area_51', 'news', 'poland', 'why'];
+const PUBLIC_ROOMS = ['default'];
 
 function normalizeRid(rid) {
     if (typeof rid !== 'string') return rid;
@@ -18,7 +19,7 @@ function normalizeRid(rid) {
 
 function initDefaultRooms() {
     DEFAULT_ROOMS.forEach(function(rid) {
-        var prefs = JSON.parse(JSON.stringify(settings.prefs.private));
+        var prefs = JSON.parse(JSON.stringify(PUBLIC_ROOMS.indexOf(rid) !== -1 ? settings.prefs.public : settings.prefs.private));
         prefs.owner = null;
         prefs.name = rid;
         newRoom(rid, prefs);
@@ -139,6 +140,9 @@ class Room {
 
 function newRoom(rid, prefs) {
     rooms[rid] = new Room(rid, prefs);
+    if (PUBLIC_ROOMS.indexOf(rid) !== -1 && roomsPublic.indexOf(rid) === -1) {
+        roomsPublic.push(rid);
+    }
     log.info.log('debug', 'newRoom', {
         rid: rid
     });
@@ -161,10 +165,10 @@ let userCommands = {
             success: success
         });
     },
-    "kick": function(targetName, ...reasonParts) {
+    "kick": function(targetGuid, ...reasonParts) {
         if (this.private.runlevel < 3) return;
         let reason = reasonParts.join(" ") || null;
-        let target = this.room.users.find(u => u.public && u.public.name && u.public.name.toLowerCase() === (targetName || "").toLowerCase());
+        let target = this.room.users.find(u => u.guid === targetGuid);
         if (!target) {
             this.socket.emit('commandFail', { reason: "userNotFound" });
             return;
@@ -181,11 +185,11 @@ let userCommands = {
             reason: reason
         });
     },
-    "ban": function(targetName, ...reasonParts) {
+    "ban": function(targetGuid, ...reasonParts) {
         if (this.private.runlevel < 3) return;
         let duration = 1440;
         let reason = reasonParts.join(" ") || null;
-        let target = this.room.users.find(u => u.public && u.public.name && u.public.name.toLowerCase() === (targetName || "").toLowerCase());
+        let target = this.room.users.find(u => u.guid === targetGuid);
         if (!target) {
             this.socket.emit('commandFail', { reason: "userNotFound" });
             return;
