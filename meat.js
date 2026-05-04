@@ -643,7 +643,7 @@ class User {
                 args: args
             });
 
-            if (this.private.runlevel >= (this.room.prefs.runlevel[command] || 0)) {
+            if (this.private.runlevel >= ((this.room.prefs.runlevel && this.room.prefs.runlevel[command]) || 0)) {
                 let commandFunc = userCommands[command];
                 if (commandFunc == "passthrough")
                     this.room.emit(command, {
