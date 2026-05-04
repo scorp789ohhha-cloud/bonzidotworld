@@ -1,0 +1,204 @@
+{
+  "APPLICATION": {
+    "VERSION": "version",
+    "LOADING": "loading",
+    "README": {
+      "README": "README",
+      "RULES": "RULES",
+      "DONATING": "DONATING",
+      "TEXT": {
+        "ONE": "Make sure to check out the",
+        "TWO": "and the",
+        "THREE": "before use.",
+        "FOUR": "Consider",
+        "FIVE": "to keep BonziWORLD alive."
+      },
+      "DONATE": {
+        "CRYPTO": {
+          "BUTTON": {
+            "TEXT": "Donate with Crypto"
+          }
+        }
+      }
+    },
+    "TOPBAR": {
+      "SIDEBAR": {
+        "TOGGLE": {
+          "EXPAND": "Expand",
+          "COLLAPSE": "Collapse"
+        }
+      }
+    },
+    "LOGIN": {
+      "INPUT": {
+        "USERNAME": {
+          "PLACEHOLDER": "Nickname"
+        },
+        "ROOM": {
+          "PLACEHOLDER": "Room ID (Optional)"
+        }
+      }
+    },
+    "SIDEBAR": {
+      "ROOMEDIT": {
+        "NAME": {
+          "PLACEHOLDER": "Room Name",
+          "LABEL": "Room Name"
+        },
+        "DESCRIPTION": {
+          "PLACEHOLDER": "Room Description",
+          "LABEL": "Room Description"
+        },
+        "PASSCODE": {
+          "PLACEHOLDER": "Room Passcode",
+          "LABEL": "Room Passcode"
+        },
+        "GODWORD": {
+          "PLACEHOLDER": "Room Godword",
+          "LABEL": "Room Godword"
+        },
+        "MOTD": {
+          "PLACEHOLDER": "Room message of the day",
+          "LABEL": "Room MOTD"
+        }
+      }
+    }
+  },
+  "ERROR": {
+    "POPUP": {
+      "TITLE": "BonziWORLD.exe has encountered an error and needs to close.",
+      "LINE1": "Nah, but seriously there was an error and you got disconnected from the server. Chances are, your internet just died out for a brief moment or your device went to sleep. Otherwise the server just screwed up.",
+      "LINE2": "Try and reload the page. If that doesn't work and your internet is okay, then panic. We'll probably be back up Soon™ though.",
+      "ACTION": "Reload?"
+    }
+  },
+  "ROOM": {
+    "INFO": {
+      "ID": "Room ID",
+      "PUBLIC": "This room is public.",
+      "PRIVATE": "This room is private.",
+      "OWNER": "You are the owner of this room."
+    }
+  },
+  "UNSUPPORTED": {
+    "POPUP": {
+      "TITLE": "BonziWORLD cannot run on this platform.",
+      "LINE1": "Unfortunately, BonziWORLD cannot run in this browser for the following reasons:",
+      "LINE2": "You can try to download a BonziWORLD app that works on your device, or update your browser."
+    }
+  },
+  "BANNED": {
+    "POPUP": {
+      "TITLE": "You got banned!",
+      "WHY": "Why?",
+      "WHEN": "When is it over?"
+    }
+  },
+  "KICKED": {
+    "POPUP": {
+      "TITLE": "You got kicked!",
+      "WHY": "Why?"
+    }
+  },
+  "CHAT": {
+    "CONTROL": {
+      "INPUT": {
+        "PLACEHOLDER": "Enter a message"
+      },
+      "MINIMIZE": {
+        "TITLE": "Minimize Log"
+      },
+      "MAXIMIZE": {
+        "TITLE": "Maximize Log"
+      },
+      "MUTED": {
+        "TITLE": "Unmute Audio"
+      },
+      "UNMUTED": {
+        "TITLE": "Mute Audio"
+      },
+      "SAPIDISABLED": {
+        "TITLE": "Enable SAPI Voice"
+      },
+      "SAPIENABLED": {
+        "TITLE": "Disable SAPI Voice"
+      },
+      "STATUS": {
+        "REFRESHING": {
+          "TITLE": "Refreshing"
+        },
+        "IDLE": {
+          "TITLE": "Idle"
+        }
+      }
+    }
+  },
+  "MODALS": {
+    "CLOSE": "Close",
+    "LOGIN": {
+      "LOGIN": {
+        "HEADER": "Bonzi Login",
+        "REGISTER": {
+          "TITLE": "Register Account",
+          "TEXT": "Register"
+        },
+        "FORGOT": {
+          "TITLE": "Forgot Password?",
+          "TEXT": "Forgot Password?"
+        },
+        "LOGIN": {
+          "BUTTON": "Login"
+        },
+        "USERNAME": {
+          "LABEL": "Username"
+        },
+        "PASSWORD": {
+          "LABEL": "Password"
+        }
+      },
+      "REGISTER": {
+        "HEADER": "Register Account",
+        "LOGIN": {
+          "TITLE": "Return to login",
+          "TEXT": "Return to login"
+        },
+        "FORGOT": {
+          "TITLE": "Forgot Password?",
+          "TEXT": "Forgot Password?"
+        },
+        "SUCCESS": {
+          "TEXT": "Success!"
+        },
+        "REGISTER": {
+          "BUTTON": "Register"
+        },
+        "USERNAME": {
+          "LABEL": "Bonzi Name"
+        },
+        "EMAIL": {
+          "LABEL": "Email"
+        },
+        "PASSWORD": {
+          "LABEL": "Password"
+        }
+      },
+      "FORGOT": {
+        "HEADER": "Forgot Password",
+        "REGISTER": {
+          "TITLE": "Register Account",
+          "TEXT": "Register"
+        },
+        "LOGIN": {
+          "TITLE": "Return to login",
+          "TEXT": "Return to login"
+        },
+        "FORGOT": {
+          "BUTTON": "Send Reset"
+        },
+        "EMAIL": {
+          "LABEL": "Email address"
+        }
+      }
+    }
+  }
+}

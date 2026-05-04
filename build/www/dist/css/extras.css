@@ -1,0 +1,76 @@
+@keyframes flying-taco-rain {
+  0% {
+    top: -90px; }
+  15% {
+    transform: rotate(-5deg); }
+  30% {
+    transform: rotate(3deg); }
+  45% {
+    transform: rotate(-3deg); }
+  60% {
+    transform: rotate(2deg); }
+  75% {
+    transform: rotate(-1deg); }
+  100% {
+    top: calc(100% + 90px); } }
+
+/* line 11, server/public/src/sass/extras/_tacos.scss */
+body.raining-tacos {
+  overflow: hidden; }
+  /* line 14, server/public/src/sass/extras/_tacos.scss */
+  body.raining-tacos .stage {
+    background-color: #64B5F6;
+    width: 100vw;
+    height: 100vh; }
+    /* line 18, server/public/src/sass/extras/_tacos.scss */
+    body.raining-tacos .stage .substage {
+      opacity: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      transition: all 0.6s cubic-bezier(0.215, 0.61, 0.355, 1); }
+      /* line 25, server/public/src/sass/extras/_tacos.scss */
+      body.raining-tacos .stage .substage#substage-intro {
+        overflow: hidden;
+        height: 100%;
+        width: 100%; }
+        /* line 29, server/public/src/sass/extras/_tacos.scss */
+        body.raining-tacos .stage .substage#substage-intro .flying-taco {
+          top: 0px;
+          left: 0px;
+          position: absolute;
+          animation-name: flying-taco-rain;
+          animation-timing-function: linear;
+          animation-iteration-count: infinite; }
+        /* line 37, server/public/src/sass/extras/_tacos.scss */
+        body.raining-tacos .stage .substage#substage-intro #intro-ground {
+          position: absolute;
+          width: 200vw;
+          height: 200vw;
+          left: -50vw;
+          background-color: #558B2F;
+          border-radius: 50%;
+          top: 75vh; }
+
+/*# sourceMappingURL=extras.css.map */
+/*
+     FILE ARCHIVED ON 19:55:57 Dec 25, 2021 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 17:29:22 May 22, 2022.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+*/
+/*
+playback timings (ms):
+  captures_list: 152.033
+  exclusion.robots: 0.14
+  exclusion.robots.policy: 0.128
+  RedisCDXSource: 6.642
+  esindex: 0.01
+  LoadShardBlock: 125.257 (3)
+  PetaboxLoader3.datanode: 126.454 (4)
+  CDXLines.iter: 17.079 (3)
+  PetaboxLoader3.resolve: 85.829 (2)
+  load_resource: 114.761
+*/

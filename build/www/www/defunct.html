@@ -1,0 +1,29 @@
+<html lang="en" >
+<meta charset="UTF-8">
+<title>403 Forbidden</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+<link rel="stylesheet" href="./style_sunset.css">
+<script>function display_ct6() {
+var x = new Date()
+var ampm = x.getHours( ) >= 12 ? ' PM' : ' AM';
+hours = x.getHours( ) % 12;
+hours = hours ? hours : 12;
+var x1=x.getMonth() + 1+ "/" + x.getDate() + "/" + x.getFullYear(); 
+x1 = x1 + " - " +  hours + ":" +  x.getMinutes() + ":" +  x.getSeconds() + ":" + ampm;
+document.getElementById('ct6').innerHTML = x1;
+display_c6();
+ }
+ function display_c6(){
+var refresh=1000; // Refresh rate in milli seconds
+mytime=setTimeout('display_ct6()',refresh)
+}
+display_c6()
+</script>
+<div class="container">
+	<div class="forbidden-sign"></div>
+	<h1>Access to this page is restricted.</h1>
+	<p>Thank you for enjoying bonziworld!</p>
+	<p>I have shut the servers down indefinitely. Goodbye!</p>
+<br>
+	<p>Current Date & Time: <span id='ct6'></span></p>
+</div>

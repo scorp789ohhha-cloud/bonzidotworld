@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en" data-ng-app="app" data-ng-strict-di data-ng-csp>
+<head>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>BonziWORLD - The global leader in gorilla-based chat client | bonzi.world</title>
+    <meta name="theme-color" content="#9b59b6" />
+    <link rel="stylesheet" type="text/css" href="/dist/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/dist/css/global.css" />
+    <link rel="stylesheet" type="text/css" href="/dist/css/extras.css" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" href="/icon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/icon/favicon-16x16.png" sizes="16x16" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" crossorigin="anonymous" />
+    <style>
+        html, body { background-color: #6d33a0; }
+        [ng\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}
+        ng\:form{display:block;}
+        .ng-animate-shim{visibility:hidden;}
+        .ng-anchor{position:absolute;}
+    </style>
+</head>
+<body class="top-bar-visible side-bar-collapsed" data-ng-controller="globalCtrl as global">
+    <script class="neck-script" id="neck-script">
+        window.apiBaseUrl = "";
+        window.environment = "production";
+        window._jsModules = window._jsModules || {};
+        window.bzw = {
+            version: "4.63.3915",
+            release: "291bdf88738563ba142c0d34a57747ed932d6a6e",
+        };
+        window.discord = {
+            enabled: true,
+            serverId: "692425352412266528",
+            defaultInvite: "https://discord.gg/Nw2nmZa",
+        };
+        window.sapi = true;
+        window.locale = {
+            language: "en",
+            region: "US",
+            source: "default",
+        };
+        window.geo = {
+            continent: { code: "NA" },
+            country: { iso_code: "US" },
+            location: { latitude: 37.751, longitude: -97.822, time_zone: "America/Chicago" },
+        };
+        window.options = {
+            enableSnow: false,
+        };
+        window.appModules = [
+            "ngIdle",
+            "pascalprecht.translate",
+            "ngResource",
+            "ngSanitize",
+            "ngAnimate",
+            "ngRoute",
+            "app.providers",
+            "app.storage",
+            "app.filters",
+            "app.resources",
+            "app.factories",
+            "app.directives",
+            "app.controllers",
+        ];
+        window.uuid = null;
+        window._debugSpeak = false;
+        window.dataLayer = window.dataLayer || [];
+    </script>
+    <script class="fingerprint" id="fingerprint">
+        window.fingerprint = null;
+    </script>
+    <script class="native" id="native">
+        window.native = { isApp: false };
+    </script>
+    <script class="user" id="user">
+        window.user = null;
+    </script>
+
+    <p class="seo-text-hidden">
+        Gorilla-based chat clients for the average Bonzi in the 21st century. BonziWORLD is a communication platform that powers conversations for thousands of Bonzi's of all nationalities each day with new features added every day.
+    </p>
+    <div id="content">
+        <div class="app-wrapper" id="app_wrapper">
+            <div class="room-background-wrapper ng-cloak" id="room_background_wrapper" data-ng-show="global.bg.visible"><div class="rbg-yt" id="rbg-yt"></div></div>
+            <div class="ng-cloak" id="room_info" data-ng-if="global.room.code &amp;&amp; !global.room.isPublic" style="font-family: inherit;">
+                <span data-translate="ROOM.INFO.ID"></span><span>: </span><span class="room_id" data-ng-bind="global.room.code"></span><br />
+                <span id="room_public" data-translate="ROOM.INFO.PUBLIC" data-ng-show="global.room.isPublic"></span><span id="room_private" data-translate="ROOM.INFO.PRIVATE" data-ng-show="!global.room.isPublic"></span>
+                <span id="room_owner" data-ng-show="global.room.isOwner">
+                    <br />
+                    <span data-translate="ROOM.INFO.OWNER"></span>
+                </span>
+            </div>
+            <div id="bonzi_tv" style="position: fixed; top:0; left:0; width:100%; height:100%; z-index:-1;"></div>
+            <canvas id="bonzi_canvas" width="462" height="761"></canvas>
+            <div id="bonzi_tv" style="position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;"></div>
+            <div
+                class="ng-cloak"
+                id="chat_log"
+                data-ng-controller="chatLogCtrl as cl"
+                data-ng-ig="cl.enabled"
+                data-ng-class='[cl.wrapClasses, cl.status.minimized ? "minimized": "maximized", cl.status.glued ? "glued" : "unglued", cl.status.refreshing ? "status-refreshing": "status-idle", cl.status.muted ? "status-muted": "status-unmuted", cl.status.sapi ? "status-sapi-enabled": "status-sapi-disabled"]'
+            >
+                <div id="chat_log_header">
+                    <div class="clh-col" id="chat_log_title"></div>
+                    <div class="clh-col" id="chat_log_status" data-ng-class="cl.status.class"></div>
+                    <div class="clh-col" id="chat_log_controls">
+                        <ul>
+                            <li class="clh-clc-item" id="chat_log_controls_connection" title="{{(cl.status.latency &amp;&amp; (cl.status.latency + ' ms')) || 'Unknown'}}">
+                                <i class="fas clc_con" data-ng-class="cl.status.connected ? ['connected', 'fa-plug'] : ['disconnected', 'fa-spinner', 'fa-pulse']" aria-hidden="true"></i>
+                            </li>
+                            <li class="clh-clc-item" id="chat_log_controls_sapi" data-ng-click="cl.sapiCtrl.toggle();">
+                                <i class="fas clc-status-sapi-disabled fa-hat-wizard" data-translate-attr="{title: 'CHAT.CONTROL.SAPIDISABLED.TITLE'}" aria-hidden="true"></i>
+                                <i class="fas clc-status-sapi-enabled fa-biohazard" data-translate-attr="{title: 'CHAT.CONTROL.SAPIENABLED.TITLE'}" aria-hidden="true"></i>
+                            </li>
+                            <li class="clh-clc-item" id="chat_log_controls_mute" data-ng-click="cl.muteCtrl.toggle();">
+                                <i class="fas clc-status-muted fa-volume-mute" data-translate-attr="{title: 'CHAT.CONTROL.MUTED.TITLE'}" aria-hidden="true"></i>
+                                <i class="fas clc-status-unmuted fa-volume-up" data-translate-attr="{title: 'CHAT.CONTROL.UNMUTED.TITLE'}" aria-hidden="true"></i>
+                            </li>
+                            <li class="clh-clc-item" id="chat_log_controls_minimize" data-ng-click="cl.control.toggle();">
+                                <i class="fas clc-minmax clc-minimize fa-chevron-down ng-clock" data-translate-attr="{title: 'CHAT.CONTROL.MINIMIZE.TITLE'}" aria-hidden="true"></i>
+                                <i class="fas clc-minmax clc-maximize fa-chevron-up ng-clock" data-translate-attr="{title: 'CHAT.CONTROL.MAXIMIZE.TITLE'}" aria-hidden="true"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="chat_log_list" scroll-glue="cl.status.glued">
+                    <ul>
+                        <li class="bonzi-message cl-msg ng-cloak" data-ng-repeat="message in cl.messages | unmuted | orderBy:orderByDate" data-ng-class="::cl.getMessageClasses(message);" ng-attr-id="cl-msg-{{::message.id}}">
+                            <span class="timestamp ng-cloak" title="{{::message.timestamp}}">[{{::cl.displayTime(message.timestamp)}}]</span><span class="sep tn-sep"> </span>
+                            <span class="bonzi-name ng-isolate-scope" data-ng-style="message.style" bonzi-text-name="message" ng-if="message">
+                                <span class="ng-cloak" data-ng-if="::message.admin"><i class="bonzi-name-icon ng-cloak" data-ng-class="::cl.getMessageNameIcon(message);" title="{{::cl.getMessageNameIconTitle(message)}}"></i></span>
+                                <span data-ng-if="!message.type || message.type === 'text' || message.type === 'media'" data-ng-bind="message.name || message.bonzi.name"></span>
+                                <span class="event-source" data-ng-if="message.type === 'event'" data-ng-bind="::message.source"></span>
+                            </span>
+                            <span class="sep bn-sep">: </span><span class="body ng-cloak" data-ng-if="::(!message.noFilter &amp;&amp; !message.args.html)" data-ng-bind="::(message.text | htmlToPlaintext)"></span>
+                            <span class="body ng-cloak" data-ng-if="::(message.noFilter || message.args.html)" data-ng-bind-html="::message.html || message.text"></span>
+                        </li>
+                    </ul>
+                    <div id="cll-glue-toggle" data-ng-click="cl.glueCtrl.glue();" title="Scroll down"><i class="fas fa-angle-double-down" aria-hidden="true"></i></div>
+                </div>
+            </div>
+            <table id="chat_bar" data-ng-controller="chatInputCtrl as ci" data-ng-class='socketConnected ? "enabled" : "disabled"'>
+                <tbody>
+                    <tr>
+                        <td id="chat_send" title="Send" data-ng-class="(ci.chatInput &amp;&amp; ci.chatInput.length > 0) ? 'enabled' : 'disabled'"><div style="font-family: inherit;">Send</div></td>
+                        <td id="chat_message_cont"><input id="chat_message" data-ng-model="ci.chatInput" type="text" data-translate-attr="{placeholder: 'CHAT.CONTROL.INPUT.PLACEHOLDER'}" data-ng-disabled="!socketConnected" /></td>
+                        <td id="chat_tray"><div class="tray_btn" id="btn_tile"></div></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="top-bar-wrapper ng-cloak" id="top_bar">
+                <div class="top-bar-inner">
+                    <div class="top-bar-item top-bar-left"><img src="/bonzi/bonzi_sg-32x32.png" alt="BonziWORLD" title="BonziWORLD" /></div>
+                    <div class="top-bar-item top-bar-middle"></div>
+                    <div class="top-bar-item top-bar-right">
+                        <div class="left-group">
+                            <div class="top-bar-user tbr-item" id="tb-user-dd-toggle">
+                                <div class="directory-wrapper">
+                                    <div class="directory-badge" title="Directory" data-ng-click="global.sbCtrl.changeView('directory:default');"><i class="fas fa-comments" aria-hidden="true"></i><span> Rooms</span></div>
+                                </div>
+                            </div>
+                            <div class="top-discord-user tbr-item" id="tb-discord-toggle">
+                                <div class="tbr-i-inner">
+                                    <div class="badge" title="Discord" data-ng-click="global.modals.open('discord');"><i class="fab fa-discord" aria-hidden="true"></i><span> Discord</span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="top-bar-user" id="tb-user-dd-toggle">
+                            <div class="user-wrapper no-user" data-ng-if="!global.user || !global.user.authenticated" data-ng-click="global.modals.open('login');">
+                                <div class="user-name"><span>Login</span></div>
+                            </div>
+                            <div class="user-wrapper ng-cloak" data-ng-if="global.user &amp;&amp; global.user.username &amp;&amp; global.user.authenticated" data-ng-click="global.sbCtrl.changeView('default:default');">
+                                <div class="user-name hide-mobile"><span data-ng-bind="::global.user.username"></span></div>
+                                <div class="user-badge"><span data-ng-bind="::global.user.username.charAt(0);"></span></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="top-bar-wrapper ng-cloak" id="sub_top_bar">
+                <div class="top-bar-inner">
+                    <div class="top-bar-item top-bar-left top-bar-room-info">
+                        <div class="room-name-wrapper ng-cloak" data-ng-if="global.room">
+                            <div class="room-icon" title="Room Icon"><i class="far fa-comments" aria-hidden="true"></i></div>
+                            <div class="room-name" title="Room Name"><span class="room-name" data-ng-bind="global.room.name"></span></div>
+                        </div>
+                    </div>
+                    <div class="top-bar-item top-bar-middle"></div>
+                    <div class="top-bar-item top-bar-right">
+                        <div class="side-bar-toggle-wrapper">
+                            <div class="side-bar-toggle" data-ng-click="global.sbCtrl.show();"><i class="fa fa-angle-left" data-translate-attr="{title: 'APPLICATION.TOPBAR.SIDEBAR.TOGGLE.EXPAND'}" aria-hidden="true"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="side-bar-wrapper ng-cloak" id="side_bar">
+            <div
+                class="side-bar-inner ng-cloak"
+                data-ng-if='!global.sidebar.collapsed &amp;&amp; (!global.sidebar.view || global.sidebar.view === "default" || global.sidebar.view === "directory")'
+                data-ng-controller="sidebarDirectoryCtrl as sbd"
+            >
+                <div class="side-bar-top">
+                    <div class="side-bar-top-inner">
+                        <div class="side-bar-top-toggle-wrapper">
+                            <div class="side-bar-toggle" data-ng-click="global.sbCtrl.hide();"><i class="fa fa-angle-right" data-translate-attr="{title: 'APPLICATION.TOPBAR.SIDEBAR.TOGGLE.COLLAPSE'}" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="side-bar-title"><h3 class="text-center">Room Directory</h3></div>
+                    </div>
+                </div>
+                <div class="side-bar-content">
+                    <div class="side-bar-content-inner room-directory-list">
+                        <ul class="room-directory-list">
+                            <li class="rm-dr-list-item ng-cloak" data-ng-repeat="rm in sbd.rooms track by rm._id">
+                                <div class="rdl-inner">
+                                    <div class="icon"><i class="fa-fw" data-ng-class="sbd.getRoomClass(rm);"></i></div>
+                                    <div class="name"><span class="ng-cloak" data-ng-bind="rm.name"></span></div>
+                                    <div class="actions">
+                                        <div class="info"><i class="fas fa-users" aria-hidden="true"></i> <span class="ng-cloak" data-ng-bind="rm.users || 0"></span></div>
+                                        <i class="fa-fw fas fa-sign-in-alt" data-ng-click="sbd.joinRoom(rm);" aria-hidden="true"></i>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="side-bar-bottom">
+                    <div class="side-bar-bottom-inner">
+                        <div class="create-room-button"><button data-ng-click="global.editRoom();">Create Room</button></div>
+                    </div>
+                </div>
+            </div>
+            <div class="side-bar-inner ng-cloak" data-ng-if='!global.sidebar.collapsed &amp;&amp; global.sidebar.view === "room" &amp;&amp; global.sidebar.subview === "edit"' data-ng-controller="editRoomCtrl as erc">
+                <div class="side-bar-top">
+                    <div class="side-bar-top-inner">
+                        <div class="side-bar-top-toggle-wrapper">
+                            <div class="side-bar-toggle" data-ng-click="global.sbCtrl.hide();"><i class="fa fa-angle-right" data-translate-attr="{title: 'APPLICATION.TOPBAR.SIDEBAR.TOGGLE.COLLAPSE'}" aria-hidden="true"></i></div>
+                        </div>
+                        <div class="side-bar-title"><h3 class="text-center" data-ng-bind='erc.isNewRoom ? "Create New Room" : "Edit Room"'>Create New Room</h3></div>
+                    </div>
+                </div>
+                <div class="side-bar-content">
+                    <div class="side-bar-content-inner room-edit-room-form">
+                        <form name="erc.form">
+                            <ul class="edit-room">
+                                <li>
+                                    <div class="erf-group">
+                                        <label for="ercName" data-translate="APPLICATION.SIDEBAR.ROOMEDIT.NAME.LABEL"></label>
+                                        <input name="ercName" type="text" data-ng-model="erc.editRoom.name" data-translate-attr="{placeholder: 'APPLICATION.SIDEBAR.ROOMEDIT.NAME.PLACEHOLDER'}" required="" />
+                                    </div>
+                                    <div class="erf-group">
+                                        <label for="ercDescription" data-translate="APPLICATION.SIDEBAR.ROOMEDIT.DESCRIPTION.LABEL"></label>
+                                        <input name="ercDescription" type="text" data-ng-model="erc.editRoom.description" data-translate-attr="{placeholder: 'APPLICATION.SIDEBAR.ROOMEDIT.DESCRIPTION.PLACEHOLDER'}" />
+                                    </div>
+                                    <div class="erf-group">
+                                        <label for="ercMotd" data-translate="APPLICATION.SIDEBAR.ROOMEDIT.MOTD.LABEL"></label>
+                                        <textarea name="ercMotd" rows="2" data-ng-model="erc.editRoom.motd" data-translate-attr="{placeholder: 'APPLICATION.SIDEBAR.ROOMEDIT.MOTD.PLACEHOLDER'}"></textarea>
+                                    </div>
+                                    <div class="erf-group">
+                                        <label for="ercPasscode" data-translate="APPLICATION.SIDEBAR.ROOMEDIT.PASSCODE.LABEL"></label>
+                                        <input name="ercPasscode" type="text" data-ng-model="erc.editRoom.preferences.passcode" data-translate-attr="{placeholder: 'APPLICATION.SIDEBAR.ROOMEDIT.PASSCODE.PLACEHOLDER'}" />
+                                    </div>
+                                    <div class="erf-group">
+                                        <label for="ercGodword" data-translate="APPLICATION.SIDEBAR.ROOMEDIT.GODWORD.LABEL"></label>
+                                        <input name="ercGodword" type="text" data-ng-model="erc.editRoom.preferences.godword" data-translate-attr="{placeholder: 'APPLICATION.SIDEBAR.ROOMEDIT.GODWORD.PLACEHOLDER'}" required="" />
+                                    </div>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+                <div class="side-bar-bottom">
+                    <div class="side-bar-bottom-inner split-buttons">
+                        <div class="room-edit-save btn-wrap">
+                            <button class="save" data-ng-click="erc.saveRoom();">
+                                <span data-ng-show="!erc.inProgress &amp;&amp; !erc.joiningRoom">Save Room</span><i class="fas fa-circle-notch fa-spin ng-cloak" data-ng-show="erc.inProgress || erc.joiningRoom" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="room-edit-reset btn-wrap"><button class="reset" data-ng-click="erc.resetRoom();">Reset Room</button></div>
+                        <div class="room-edit-cancel btn-wrap"><button class="cancel" data-ng-click="global.sbCtrl.back();">Cancel</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="page" id="page_login" data-ng-controller="loginCtrl as login">
+            <div class="app_showcase" id="login_apps"></div>
+            <div class="ng-cloak" id="login_readme">
+                <span data-translate="APPLICATION.README.TEXT.ONE"></span> <a id="readme" href="/bzw-readme.html" target="_blank" data-translate="APPLICATION.README.README"></a>
+                <span data-translate="APPLICATION.README.TEXT.TWO"></span> <a id="rules" href="/bzw-readme.html" target="_blank" data-translate="APPLICATION.README.RULES"></a>
+                <span data-translate="APPLICATION.README.TEXT.THREE"></span>
+            </div>
+            <div id="login_card" style="">
+                <input
+                    id="login_name"
+                    type="text"
+                    data-translate-attr="{placeholder: 'APPLICATION.LOGIN.INPUT.USERNAME.PLACEHOLDER'}"
+                    autofocus=""
+                    data-ng-model="login.username"
+                    data-ng-keydown="$event.keyCode === 13 &amp;&amp; login.doLogin();"
+                />
+                <input id="login_room" type="text" data-translate-attr="{placeholder: 'APPLICATION.LOGIN.INPUT.ROOM.PLACEHOLDER'}" data-ng-model="login.room" data-ng-keydown="$event.keyCode === 13 &amp;&amp; login.doLogin();" />
+                <div id="login_arrow" data-ng-click="login.doLogin();" data-ng-keydown="$event.keyCode === 13 &amp;&amp; login.doLogin();"><i class="fas fa-arrow-right" aria-hidden="true"></i></div>
+                <div id="login_user" data-ng-click='global.modals.open("login");'><i class="fas fa-sign-in-alt" aria-hidden="true"></i></div>
+                <div id="login_error" style="display: none;"></div>
+            </div>
+            <div class="lowercase" id="login_load" data-translate="APPLICATION.LOADING" style="display: none;"></div>
+            <div id="login_version"><span class="capitalize ng-cloak" data-translate="APPLICATION.VERSION"></span><span> 4.63.3915</span></div>
+            <div id="login_social">
+                <a href="https://twitter.com/JustBonziThings" target="_blank" style="margin-right: 10px;"><i class="fab fa-twitter fa-2x" aria-hidden="true"></i></a>
+                <a href="https://www.facebook.com/bonziworld/" target="_blank" style="margin-right: 10px;"><i class="fab fa-facebook fa-2x" aria-hidden="true"></i></a>
+                <a href="https://www.instagram.com/bonziworld/" target="_blank" style="margin-right: 10px;"><i class="fab fa-instagram fa-2x" aria-hidden="true"></i></a>
+                <a href="https://www.youtube.com/channel/UCYyNXFU-dw4PTBsLQFtDlww" target="_blank" style="margin-right: 10px;"><i class="fab fa-youtube fa-2x" aria-hidden="true"></i></a>
+            </div>
+        </div>
+        <div class="page" id="page_error" style="display: none;">
+            <div class="message_cont" id="error_cont">
+                <img src="/img/error/logo.png" alt="BonziWORLD" /><br />
+                <br />
+                <h1 data-translate="ERROR.POPUP.TITLE"></h1>
+                <br />
+                <span data-translate="ERROR.POPUP.LINE1"></span><br />
+                <br />
+                <span data-translate="ERROR.POPUP.LINE2"></span><br />
+                <br />
+                <a href="#" onclick="window.location.reload();" data-translate="ERROR.POPUP.ACTION"></a><br />
+                <br />
+            </div>
+        </div>
+        <div class="page" id="page_ban" style="display: none;">
+            <div class="message_cont" id="ban_cont">
+                <img src="/img/ban/logo.png" /><br />
+                <br />
+                <h1 data-translate="BANNED.POPUP.TITLE"></h1>
+                <br />
+                <br />
+                <b><span data-ng-translate="BANNED.POPUP.WHY"></span><span> </span></b><span id="ban_reason"></span><br />
+                <b><span data-translate="BANNED.POPUP.WHEN"></span><span> </span></b><span id="ban_end"></span><br />
+            </div>
+        </div>
+        <div class="page" id="page_kick" style="display: none;">
+            <div class="message_cont" id="kick_cont">
+                <img src="/img/ban/logo.png" /><br />
+                <br />
+                <h1 data-translate="KICKED.POPUP.TITLE"></h1>
+                <br />
+                <br />
+                <b><span data-ng-translate="KICKED.POPUP.WHY"></span><span> </span></b><span id="kick_reason"></span><br />
+            </div>
+        </div>
+        <div class="page" id="page_unsupp" style="display: none;">
+            <div class="message_cont" id="unsupp_cont">
+                <img src="/img/error/logo.png" /><br />
+                <br />
+                <h1 data-translate="UNSUPPORTED.POPUP.TITLE"></h1>
+                <br />
+                <span data-translate="UNSUPPORTED.POPUP.LINE1"></span><br />
+                <ul id="unsupp_reasons"></ul>
+                <span data-translate="UNSUPPORTED.POPUP.LINE2"></span>
+                <div class="app_showcase" id="login_apps"></div>
+            </div>
+        </div>
+    </div>
+    <!-- Modal:Login:Begin -->
+    <div class="bzw-modal login-modal ng-cloak" data-ng-if="global.modals.login">
+        <div class="login-modal-inner modal-inner" data-ng-controller="userLoginCtrl as modalLogin">
+            <div class="login-modal-login form-panel login" data-ng-if='!modalLogin.view || modalLogin.view === "login"'>
+                <div class="login-modal-login-inner modal-panel-inner">
+                    <form name="modalLogin.loginForm">
+                        <div class="form-header"><h2 data-translate="MODALS.LOGIN.LOGIN.HEADER"></h2></div>
+                        <div class="form-content">
+                            <div class="username form-group">
+                                <input type="text" name="username" required="required" autocomplete="username" data-ng-model="modalLogin.payload.username" data-translate-attr="{placeholder: 'MODALS.LOGIN.LOGIN.USERNAME.LABEL'}" />
+                            </div>
+                            <div class="password form-group">
+                                <input type="password" name="password" required="required" autocomplete="current-password" data-ng-model="modalLogin.payload.password" data-translate-attr="{placeholder: 'MODALS.LOGIN.LOGIN.PASSWORD.LABEL'}" />
+                            </div>
+                            <div class="form-group split-links">
+                                <div class="register split-link-item"><span data-translate="MODALS.LOGIN.LOGIN.REGISTER.TEXT" data-ng-click='modalLogin.changeView("register");'></span></div>
+                                <div class="forgot split-link-item"><span data-translate="MODALS.LOGIN.LOGIN.FORGOT.TEXT" data-ng-click='modalLogin.changeView("forgot");'></span></div>
+                            </div>
+                            <div class="login form-group one-button"><button type="button" data-ng-click="modalLogin.submit();" data-translate="MODALS.LOGIN.LOGIN.LOGIN.BUTTON"></button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="login-modal-register form-panel register ng-cloak" data-ng-if='modalLogin.view === "register"'>
+                <div class="login-modal-login-inner modal-panel-inner">
+                    <div class="form-header"><h2>Register</h2></div>
+                    <div class="form-content text-center">
+                        <p style="margin:20px 0;">Account registration is not available on this server.</p>
+                        <p style="margin:20px 0;">You can chat without an account — just enter a name on the main screen.</p>
+                        <button type="button" data-ng-click='modalLogin.changeView("login");'>Back to Login</button>
+                    </div>
+                </div>
+            </div>
+            <div class="login-modal-forgot form-panel forgot ng-cloak" data-ng-if='modalLogin.view === "forgot"'>
+                <div class="login-modal-login-inner modal-panel-inner" data-ng-controller="userForgotCtrl as fp">
+                    <form name="fp.form">
+                        <div class="form-header"><h2 data-translate="MODALS.LOGIN.FORGOT.HEADER"></h2></div>
+                        <div class="form-content">
+                            <div class="username form-group">
+                                <input type="email" name="email" required="required" autocomplete="email" data-ng-model="fp.payload.email" data-translate-attr="{placeholder: 'MODALS.LOGIN.FORGOT.EMAIL.LABEL'}" />
+                            </div>
+                            <div class="form-group split-links">
+                                <div class="register split-link-item"><span data-translate="MODALS.LOGIN.FORGOT.REGISTER.TEXT" data-ng-click='modalLogin.changeView("register");'></span></div>
+                                <div class="forgot split-link-item"><span data-translate="MODALS.LOGIN.FORGOT.LOGIN.TEXT" data-ng-click='modalLogin.changeView("login");'></span></div>
+                            </div>
+                            <div class="login form-group one-button"><button type="button" data-ng-click="fp.submit();" data-translate="MODALS.LOGIN.FORGOT.FORGOT.BUTTON"></button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="close-modal" data-translate-attr="{title: 'MODALS.CLOSE'}"><i class="fas fa-2x fa-times" data-ng-click='global.modals.close("login");' aria-hidden="true"></i></div>
+        </div>
+    </div>
+    <!-- Modal:Login:End -->
+    <!-- Modal:Discord:Begin -->
+    <div class="bzw-modal discord-modal ng-cloak" data-ng-if="global.modals.discord">
+        <div class="discord-modal-inner modal-inner">
+            <iframe src="https://discordapp.com/widget?id=692425352412266528&amp;theme=dark" width="350" height="500" allowtransparency="true" frameborder="0"></iframe>
+            <div class="close-modal" data-translate-attr="{title: 'MODALS.CLOSE'}"><i class="fas fa-2x fa-times" data-ng-click='global.modals.close("discord");' aria-hidden="true"></i></div>
+        </div>
+    </div>
+    <!-- Modal:Discord:End -->
+    <ad></ad>
+
+    <!-- Core Scripts -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script src="/dist/js/core.min.js"></script>
+    <script src="/dist/js/plugins.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.2.0/dist/confetti.browser.min.js"></script>
+    <script src="/dist/js/finger.min.js"></script>
+    <script src="/js/lib/speakjs/speakClient.js"></script>
+    <script src="/dist/js/angular.min.js"></script>
+    <script src="/dist/js/bzw.min.js"></script>
+    <script>
+        window.socket = io({
+            autoConnect: true,
+            query: {
+                lang: (window.navigator && window.navigator.language && window.navigator.language.slice(0, 2)) || "en",
+                version: "4.63.3915",
+                release: "291bdf88738563ba142c0d34a57747ed932d6a6e",
+            },
+        });
+    </script>
+    <script>
+        // Unregister any existing service workers to prevent caching overhead
+        if ("serviceWorker" in navigator) {
+            navigator.serviceWorker.getRegistrations().then(function(registrations) {
+                for (var r of registrations) { r.unregister(); }
+            });
+        }
+        // Stubs for analytics/fingerprint globals the framework expects
+        window.dataLayer = window.dataLayer || { push: function() {} };
+        window.sendFinger = window.sendFinger || function() {};
+        // Enable SAPI4 TTS mode (tetyys.com audio URLs sent by server)
+        window.sapi = true;
+        // Lightweight SoundManager2-compatible shim using HTML5 Audio
+        window.soundManager = {
+            setup: function(opts) {
+                if (opts && typeof opts.onready === 'function') {
+                    setTimeout(opts.onready, 0);
+                }
+            },
+            createSound: function(opts) {
+                var audio = new Audio();
+                var stopped = false;
+                audio.onended = function() {
+                    if (!stopped && opts.onfinish) opts.onfinish();
+                };
+                audio.onerror = function() {
+                    if (!stopped && opts.onerror) opts.onerror(1, 'load error');
+                };
+                audio.oncanplaythrough = function() {
+                    if (!stopped && opts.onload) opts.onload();
+                };
+                if (opts.volume !== undefined) {
+                    audio.volume = Math.max(0, Math.min(1, opts.volume / 100));
+                }
+                audio.src = opts.url || '';
+                if (opts.autoPlay) {
+                    audio.play().catch(function(e) {
+                        if (!stopped && opts.onerror) opts.onerror(1, e.message);
+                    });
+                }
+                return {
+                    id: opts.id,
+                    loaded: false,
+                    stop: function() { stopped = true; audio.pause(); audio.src = ''; },
+                    play: function() { audio.play().catch(function(){}); },
+                    pause: function() { audio.pause(); },
+                    setVolume: function(v) { audio.volume = Math.max(0, Math.min(1, v / 100)); }
+                };
+            }
+        };
+    </script>
+    <script src="/dist/js/framework.min.js"></script>
+    <script src="/dist/js/app.min.js"></script>
+    <script src="/dist/js/extras.min.js"></script>
+    <script>
+        // Remove expensive deprecated DOM mutation listeners added by framework
+        // These fire synchronously on EVERY DOM change - Angular triggers hundreds per cycle
+        $(document).ready(function() {
+            $('body').off('DOMNodeInserted').off('DOMNodeRemoved');
+        });
+    </script>
+</body>
+</html>
