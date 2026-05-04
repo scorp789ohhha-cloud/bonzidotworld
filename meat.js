@@ -5,6 +5,29 @@ const io = require('./index.js').io;
 const settings = require("./settings.json");
 const sanitize = require('sanitize-html');
 
+// IP ban store: { [ip]: { end: Date, reason: string } }
+const ipBans = {};
+
+function addIpBan(ip, end, reason) {
+    ipBans[ip] = { end: end, reason: reason };
+    if (typeof Ban.addBan === 'function') Ban.addBan(ip, end, reason);
+}
+
+function isIpBanned(ip) {
+    if (Ban.isBanned(ip)) return true;
+    const entry = ipBans[ip];
+    if (!entry) return false;
+    if (new Date() > new Date(entry.end)) {
+        delete ipBans[ip];
+        return false;
+    }
+    return true;
+}
+
+function getIpBan(ip) {
+    return ipBans[ip] || null;
+}
+
 let roomsPublic = [];
 let rooms = {};
 let usersAll = [];
@@ -195,7 +218,7 @@ let userCommands = {
             return;
         }
         let end = new Date(Date.now() + duration * 60 * 1000);
-        if (typeof Ban.addBan === 'function') Ban.addBan(target.getIp(), end, reason);
+        addIpBan(target.getIp(), end, reason);
         target.socket.emit("ban", { reason: reason, end: end });
         target.socket.disconnect(true);
         this.room.emit("bzw-o-banned", {
@@ -361,8 +384,15 @@ class User {
         this.socket = socket;
 
         // Handle ban
-            if (Ban.isBanned(this.getIp())) {
-            Ban.handleBan(this.socket);
+        if (isIpBanned(this.getIp())) {
+            const banEntry = getIpBan(this.getIp());
+            if (banEntry) {
+                this.socket.emit("ban", { reason: banEntry.reason, end: banEntry.end });
+                this.socket.disconnect(true);
+            } else {
+                Ban.handleBan(this.socket);
+            }
+            return;
         }
 
         this.private = {
