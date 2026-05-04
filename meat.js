@@ -161,6 +161,51 @@ let userCommands = {
             success: success
         });
     },
+    "kick": function(targetName, ...reasonParts) {
+        if (this.private.runlevel < 3) return;
+        let reason = reasonParts.join(" ") || null;
+        let target = this.room.users.find(u => u.public && u.public.name && u.public.name.toLowerCase() === (targetName || "").toLowerCase());
+        if (!target) {
+            this.socket.emit('commandFail', { reason: "userNotFound" });
+            return;
+        }
+        target.socket.emit("kick", { reason: reason });
+        target.socket.disconnect(true);
+        this.room.emit("bzw-o-kicked", {
+            bonzi: target.public,
+            reason: reason
+        });
+        log.info.log('info', 'kick', {
+            by: this.guid,
+            target: target.guid,
+            reason: reason
+        });
+    },
+    "ban": function(targetName, ...reasonParts) {
+        if (this.private.runlevel < 3) return;
+        let duration = 1440;
+        let reason = reasonParts.join(" ") || null;
+        let target = this.room.users.find(u => u.public && u.public.name && u.public.name.toLowerCase() === (targetName || "").toLowerCase());
+        if (!target) {
+            this.socket.emit('commandFail', { reason: "userNotFound" });
+            return;
+        }
+        let end = new Date(Date.now() + duration * 60 * 1000);
+        if (typeof Ban.addBan === 'function') Ban.addBan(target.getIp(), end, reason);
+        target.socket.emit("ban", { reason: reason, end: end });
+        target.socket.disconnect(true);
+        this.room.emit("bzw-o-banned", {
+            bonzi: target.public,
+            length: duration,
+            reason: reason
+        });
+        log.info.log('info', 'ban', {
+            by: this.guid,
+            target: target.guid,
+            duration: duration,
+            reason: reason
+        });
+    },
     "sanitize": function() {
         let sanitizeTerms = ["false", "off", "disable", "disabled", "f", "no", "n"];
         let argsString = Utils.argsString(arguments);
