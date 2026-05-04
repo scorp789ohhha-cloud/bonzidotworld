@@ -8,13 +8,28 @@ const sanitize = require('sanitize-html');
 // IP ban store: { [ip]: { end: Date, reason: string } }
 const ipBans = {};
 
-function addIpBan(ip, end, reason) {
+// Kicked IPs: temporarily blocked from rejoining { [ip]: expiry timestamp }
+const kickedIps = {};
+
+function addKickedIp(ip) {
+    // Block rejoin for 10 seconds after kick
+    kickedIps[ip] = Date.now() + 10000;
+}
+
+function isKickedIp(ip) {
+    const expiry = kickedIps[ip];
+    if (!expiry) return false;
+    if (Date.now() > expiry) {
+        delete kickedIps[ip];
+        return false;
+    }
+    return true;
+}
     ipBans[ip] = { end: end, reason: reason };
     if (typeof Ban.addBan === 'function') Ban.addBan(ip, end, reason);
 }
 
 function isIpBanned(ip) {
-    if (Ban.isBanned(ip)) return true;
     const entry = ipBans[ip];
     if (!entry) return false;
     if (new Date() > new Date(entry.end)) {
@@ -197,6 +212,7 @@ let userCommands = {
             return;
         }
         target.socket.emit("kick", { reason: reason });
+        addKickedIp(target.getIp());
         target.socket.disconnect(true);
         this.room.emit("bzw-o-kicked", {
             bonzi: target.public,
@@ -386,12 +402,15 @@ class User {
         // Handle ban
         if (isIpBanned(this.getIp())) {
             const banEntry = getIpBan(this.getIp());
-            if (banEntry) {
-                this.socket.emit("ban", { reason: banEntry.reason, end: banEntry.end });
-                this.socket.disconnect(true);
-            } else {
-                Ban.handleBan(this.socket);
-            }
+            this.socket.emit("ban", { reason: banEntry.reason, end: banEntry.end });
+            this.socket.disconnect(true);
+            return;
+        }
+
+        // Block kicked users from immediately rejoining
+        if (isKickedIp(this.getIp())) {
+            this.socket.emit("kick", { reason: "You were kicked." });
+            this.socket.disconnect(true);
             return;
         }
 
